@@ -4,6 +4,7 @@ import com.devamateur.Todo_App.Service.TaskService;
 import com.devamateur.Todo_App.dto.request.TaskRequest;
 import com.devamateur.Todo_App.dto.response.ApiResponse;
 import com.devamateur.Todo_App.dto.response.TaskResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +19,9 @@ public class TaskController {
     TaskService taskService;
 
     @GetMapping
-    public ApiResponse<List<TaskResponse>> getAllTasks() {
+    public ApiResponse<List<TaskResponse>> getTasks(@RequestParam(required = false) Boolean completed) {
         ApiResponse<List<TaskResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(taskService.getAllTasks());
+        apiResponse.setResult(taskService.getTasks(completed));
         return apiResponse;
     }
 
@@ -32,16 +33,23 @@ public class TaskController {
     }
 
     @PostMapping
-    public ApiResponse<TaskResponse> createTask(@RequestBody TaskRequest request) {
+    public ApiResponse<TaskResponse> createTask(@RequestBody @Valid TaskRequest request) {
         ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(taskService.createTask(request));
         return apiResponse;
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<TaskResponse> updateTask(@PathVariable Long id, @RequestBody TaskRequest request) {
+    public ApiResponse<TaskResponse> updateTask(@PathVariable Long id, @RequestBody @Valid TaskRequest request) {
         ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(taskService.updateTask(id, request));
+        return apiResponse;
+    }
+
+    @PatchMapping("/{id}/complete")
+    public ApiResponse<TaskResponse> markTaskAsCompleted(@PathVariable Long id) {
+        ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(taskService.markTaskAsCompleted(id));
         return apiResponse;
     }
 

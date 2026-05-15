@@ -6,6 +6,8 @@ import com.devamateur.Todo_App.dto.response.TaskResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
     Task toTask(TaskRequest taskRequest);
@@ -13,4 +15,6 @@ public interface TaskMapper {
     TaskResponse toTaskResponse(Task task);
 
     void updateEntityFromRequest(TaskRequest request, @MappingTarget Task task);
+
+    List<TaskResponse> toTaskResponseList(List<Task> tasks);
 }

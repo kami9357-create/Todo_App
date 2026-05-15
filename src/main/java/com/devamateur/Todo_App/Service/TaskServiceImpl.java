@@ -21,10 +21,14 @@ public class TaskServiceImpl implements TaskService {
     TaskMapper taskMapper;
 
     @Override
-    public List<TaskResponse> getAllTasks() {
-        return taskRepository.findAll().stream()
-                .map(taskMapper::toTaskResponse)
-                .toList();
+    public List<TaskResponse> getTasks(Boolean completed) {
+        List<Task> tasks;
+        if (completed != null) {
+            tasks = taskRepository.findByCompleted(completed);
+        } else {
+            tasks = taskRepository.findAll();
+        }
+        return taskMapper.toTaskResponseList(tasks);
     }
 
     @Override
@@ -43,6 +47,13 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponse updateTask(Long id, TaskRequest request) {
         Task task = getTaskEntityById(id);
         taskMapper.updateEntityFromRequest(request, task);
+        return taskMapper.toTaskResponse(taskRepository.save(task));
+    }
+
+    @Override
+    public TaskResponse markTaskAsCompleted(Long id) {
+        Task task = getTaskEntityById(id);
+        task.setCompleted(true);
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
