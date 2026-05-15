@@ -10,6 +10,7 @@ import com.devamateur.Todo_App.dto.response.TaskResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 @Service
@@ -20,6 +21,7 @@ public class TaskServiceImpl implements TaskService {
     TaskRepository taskRepository;
     TaskMapper taskMapper;
 
+    @Transactional(readOnly = true)
     @Override
     public List<TaskResponse> getTasks(Boolean completed) {
         List<Task> tasks;
@@ -31,18 +33,21 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toTaskResponseList(tasks);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public TaskResponse getTaskById(Long id) {
         Task task = getTaskEntityById(id);
         return taskMapper.toTaskResponse(task);
     }
 
+    @Transactional
     @Override
     public TaskResponse createTask(TaskRequest request) {
         Task task = taskMapper.toTask(request);
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
+    @Transactional
     @Override
     public TaskResponse updateTask(Long id, TaskRequest request) {
         Task task = getTaskEntityById(id);
@@ -50,6 +55,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
+    @Transactional
     @Override
     public TaskResponse markTaskAsCompleted(Long id) {
         Task task = getTaskEntityById(id);
@@ -57,6 +63,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
+    @Transactional
     @Override
     public void deleteTask(Long id) {
         Task task = getTaskEntityById(id);
