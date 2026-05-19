@@ -32,6 +32,14 @@ public class TaskController {
         return apiResponse;
     }
 
+    @GetMapping("/search")
+    public ApiResponse<List<TaskResponse>> searchTasks(@RequestParam String keyword) {
+        ApiResponse<List<TaskResponse>> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(taskService.searchTasks(keyword));
+        return apiResponse;
+    }
+
+
     @PostMapping
     public ApiResponse<TaskResponse> createTask(@RequestBody @Valid TaskRequest request) {
         ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
@@ -50,6 +58,13 @@ public class TaskController {
     public ApiResponse<TaskResponse> markTaskAsCompleted(@PathVariable Long id) {
         ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
         apiResponse.setResult(taskService.markTaskAsCompleted(id));
+        return apiResponse;
+    }
+
+    @PatchMapping("/{id}/uncomplete")
+    public ApiResponse<TaskResponse> markTaskAsUncompleted(@PathVariable Long id) {
+        ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
+        apiResponse.setResult(taskService.markTaskAsUncompleted(id));
         return apiResponse;
     }
 

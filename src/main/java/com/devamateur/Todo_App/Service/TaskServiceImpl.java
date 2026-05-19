@@ -40,6 +40,13 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toTaskResponse(task);
     }
 
+    @Override
+    public List<TaskResponse> searchTasks(String keyword) {
+        List<Task> task = taskRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword);
+        return taskMapper.toTaskResponseList(task);
+    }
+
+
     @Transactional
     @Override
     public TaskResponse createTask(TaskRequest request) {
@@ -62,6 +69,14 @@ public class TaskServiceImpl implements TaskService {
         task.setCompleted(true);
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
+
+    @Override
+    public TaskResponse markTaskAsUncompleted(Long id) {
+        Task task = getTaskEntityById(id);
+        task.setCompleted(false);
+        return taskMapper.toTaskResponse(taskRepository.save(task));
+    }
+
 
     @Transactional
     @Override
