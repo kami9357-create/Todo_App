@@ -42,6 +42,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskResponse> searchTasks(String keyword) {
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            throw new AppException(ErrorCode.INVALID_REQUEST);
+        }
+
         List<Task> task = taskRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword);
         return taskMapper.toTaskResponseList(task);
     }
@@ -70,6 +75,7 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
+    @Transactional
     @Override
     public TaskResponse markTaskAsUncompleted(Long id) {
         Task task = getTaskEntityById(id);
