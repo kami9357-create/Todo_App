@@ -1,6 +1,6 @@
-package com.devamateur.Todo_App.Mapper;
+package com.devamateur.Todo_App.mapper;
 
-import com.devamateur.Todo_App.Entity.Task;
+import com.devamateur.Todo_App.entity.Task;
 import com.devamateur.Todo_App.dto.request.TaskRequest;
 import com.devamateur.Todo_App.dto.response.TaskResponse;
 import org.mapstruct.Mapper;

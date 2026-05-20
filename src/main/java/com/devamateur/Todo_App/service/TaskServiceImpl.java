@@ -1,10 +1,10 @@
-package com.devamateur.Todo_App.Service;
+package com.devamateur.Todo_App.service;
 
-import com.devamateur.Todo_App.Entity.Task;
-import com.devamateur.Todo_App.Exception.AppException;
-import com.devamateur.Todo_App.Exception.ErrorCode;
-import com.devamateur.Todo_App.Mapper.TaskMapper;
-import com.devamateur.Todo_App.Repository.TaskRepository;
+import com.devamateur.Todo_App.entity.Task;
+import com.devamateur.Todo_App.exception.AppException;
+import com.devamateur.Todo_App.exception.ErrorCode;
+import com.devamateur.Todo_App.mapper.TaskMapper;
+import com.devamateur.Todo_App.repository.TaskRepository;
 import com.devamateur.Todo_App.dto.request.TaskRequest;
 import com.devamateur.Todo_App.dto.response.TaskResponse;
 import lombok.RequiredArgsConstructor;

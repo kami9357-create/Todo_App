@@ -1,6 +1,6 @@
-package com.devamateur.Todo_App.Repository;
+package com.devamateur.Todo_App.repository;
 
-import com.devamateur.Todo_App.Entity.Task;
+import com.devamateur.Todo_App.entity.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

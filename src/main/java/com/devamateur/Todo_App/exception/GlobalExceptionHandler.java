@@ -1,4 +1,4 @@
-package com.devamateur.Todo_App.Exception;
+package com.devamateur.Todo_App.exception;
 
 import com.devamateur.Todo_App.dto.response.ApiResponse;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 @Builder
-public class GlobalHandleException {
+public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse<Object>> handleException(Exception exception) {
         ApiResponse<Object> apiResponse = ApiResponse.builder()

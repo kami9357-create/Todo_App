@@ -1,4 +1,4 @@
-package com.devamateur.Todo_App.Exception;
+package com.devamateur.Todo_App.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

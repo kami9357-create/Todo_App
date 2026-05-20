@@ -1,4 +1,4 @@
-package com.devamateur.Todo_App.Entity;
+package com.devamateur.Todo_App.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
-public class Task {
+public class    Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;

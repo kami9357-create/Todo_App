@@ -1,6 +1,6 @@
-package com.devamateur.Todo_App.Controller;
+package com.devamateur.Todo_App.controller;
 
-import com.devamateur.Todo_App.Service.TaskService;
+import com.devamateur.Todo_App.service.TaskService;
 import com.devamateur.Todo_App.dto.request.TaskRequest;
 import com.devamateur.Todo_App.dto.response.ApiResponse;
 import com.devamateur.Todo_App.dto.response.TaskResponse;

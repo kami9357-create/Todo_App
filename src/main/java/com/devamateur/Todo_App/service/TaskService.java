@@ -1,4 +1,4 @@
-package com.devamateur.Todo_App.Service;
+package com.devamateur.Todo_App.service;
 
 import com.devamateur.Todo_App.dto.request.TaskRequest;
 import com.devamateur.Todo_App.dto.response.TaskResponse;
