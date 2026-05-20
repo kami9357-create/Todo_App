@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 @Builder
-public class GlobalExceptionHandler {
 public class GlobalHandleException {
 
->>>>>>> ae5b0c3f54ca0275455bb85efe71c16ed8148bc9:src/main/java/com/devamateur/Todo_App/Exception/GlobalHandleException.java
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse<Object>> handleException(Exception exception) {
+        exception.printStackTrace();
 
         ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
 
@@ -31,7 +30,6 @@ public class GlobalHandleException {
 
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse<Object>> handleAppException(AppException exception) {
-        exception.printStackTrace();
 
         ErrorCode errorCode = exception.getErrorCode();
 
