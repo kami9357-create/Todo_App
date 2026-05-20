@@ -50,17 +50,17 @@ public class TaskController {
                 .build();
     }
 
-    @PatchMapping("/{id})")
-    public ApiResponse<TaskResponse> patchTask(@PathVariable Long id, @RequestBody @Valid TaskPatchRequest request) {
-        return ApiResponse.<TaskResponse>builder()
-                .result(taskService.patchTask(id, request))
-                .build();
-    }
-
     @PutMapping("/{id}")
     public ApiResponse<TaskResponse> updateTask(@PathVariable Long id, @RequestBody @Valid TaskRequest request) {
         return ApiResponse.<TaskResponse>builder()
                 .result(taskService.updateTask(id, request))
+                .build();
+    }
+
+    @PatchMapping("/{id}")
+    public ApiResponse<TaskResponse> patchTask(@PathVariable Long id, @RequestBody @Valid TaskPatchRequest request) {
+        return ApiResponse.<TaskResponse>builder()
+                .result(taskService.patchTask(id, request))
                 .build();
     }
 
@@ -80,12 +80,7 @@ public class TaskController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ApiResponse<String> deleteTask(@PathVariable Long id) {
+    public void deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
-
-        return ApiResponse.<String>builder()
-                .message("Task deleted successfully")
-                .result("Deleted task id: " + id)
-                .build();
     }
 }
