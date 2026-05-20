@@ -1,20 +1,21 @@
 package com.devamateur.Todo_App.exception;
 
 import com.devamateur.Todo_App.dto.response.ApiResponse;
-import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+
+@Slf4j
 @RestControllerAdvice
-@Builder
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
     ResponseEntity<ApiResponse<Object>> handleException(Exception exception) {
-        exception.printStackTrace();
+        log.error("Unhandled exception occurred: ", exception);
 
         ErrorCode errorCode = ErrorCode.UNCATEGORIZED_EXCEPTION;
 

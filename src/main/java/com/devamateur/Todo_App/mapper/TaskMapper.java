@@ -1,5 +1,6 @@
 package com.devamateur.Todo_App.mapper;
 
+import com.devamateur.Todo_App.dto.request.TaskPatchRequest;
 import com.devamateur.Todo_App.entity.Task;
 import com.devamateur.Todo_App.dto.request.TaskRequest;
 import com.devamateur.Todo_App.dto.response.TaskResponse;
@@ -16,8 +17,12 @@ public interface TaskMapper {
 
     TaskResponse toTaskResponse(Task task);
 
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE) // This ensures that null values in the request do not overwrite existing values in the entity
+    // Dùng cho PUT: cập nhật toàn bộ, null có thể ghi đè vào entity
     void updateEntityFromRequest(TaskRequest request, @MappingTarget Task task);
+
+    // Dùng cho PATCH: chỉ cập nhật những trường có giá trị khác null, bỏ qua trường null
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void patchEntityFromRequest(TaskPatchRequest request, @MappingTarget Task task);
 
     List<TaskResponse> toTaskResponseList(List<Task> tasks);
 }

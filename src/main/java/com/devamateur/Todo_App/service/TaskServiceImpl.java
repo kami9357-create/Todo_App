@@ -1,5 +1,6 @@
 package com.devamateur.Todo_App.service;
 
+import com.devamateur.Todo_App.dto.request.TaskPatchRequest;
 import com.devamateur.Todo_App.entity.Task;
 import com.devamateur.Todo_App.exception.AppException;
 import com.devamateur.Todo_App.exception.ErrorCode;
@@ -21,8 +22,8 @@ public class TaskServiceImpl implements TaskService {
     TaskRepository taskRepository;
     TaskMapper taskMapper;
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public List<TaskResponse> getTasks(Boolean completed) {
         List<Task> tasks;
         if (completed != null) {
@@ -33,14 +34,15 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toTaskResponseList(tasks);
     }
 
-    @Transactional(readOnly = true)
     @Override
+    @Transactional(readOnly = true)
     public TaskResponse getTaskById(Long id) {
         Task task = getTaskEntityById(id);
         return taskMapper.toTaskResponse(task);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<TaskResponse> searchTasks(String keyword) {
 
         if (keyword == null || keyword.trim().isEmpty()) {
@@ -52,40 +54,47 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
-    @Transactional
     @Override
+    @Transactional
     public TaskResponse createTask(TaskRequest request) {
         Task task = taskMapper.toTask(request);
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
-    @Transactional
     @Override
+    @Transactional
     public TaskResponse updateTask(Long id, TaskRequest request) {
         Task task = getTaskEntityById(id);
         taskMapper.updateEntityFromRequest(request, task);
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
-    @Transactional
     @Override
+    @Transactional
+    public TaskResponse patchTask(Long id, TaskPatchRequest request) {
+        Task task = getTaskEntityById(id);
+        taskMapper.patchEntityFromRequest(request, task);
+        return taskMapper.toTaskResponse(taskRepository.save(task));
+    }
+
+    @Override
+    @Transactional
     public TaskResponse markTaskAsCompleted(Long id) {
         Task task = getTaskEntityById(id);
         task.setCompleted(true);
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
-    @Transactional
     @Override
+    @Transactional
     public TaskResponse markTaskAsUncompleted(Long id) {
         Task task = getTaskEntityById(id);
         task.setCompleted(false);
         return taskMapper.toTaskResponse(taskRepository.save(task));
     }
 
-
-    @Transactional
     @Override
+    @Transactional
     public void deleteTask(Long id) {
         Task task = getTaskEntityById(id);
         taskRepository.delete(task);

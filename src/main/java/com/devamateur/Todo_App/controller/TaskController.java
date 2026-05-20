@@ -1,5 +1,6 @@
 package com.devamateur.Todo_App.controller;
 
+import com.devamateur.Todo_App.dto.request.TaskPatchRequest;
 import com.devamateur.Todo_App.service.TaskService;
 import com.devamateur.Todo_App.dto.request.TaskRequest;
 import com.devamateur.Todo_App.dto.response.ApiResponse;
@@ -7,6 +8,7 @@ import com.devamateur.Todo_App.dto.response.TaskResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,59 +22,70 @@ public class TaskController {
 
     @GetMapping
     public ApiResponse<List<TaskResponse>> getTasks(@RequestParam(required = false) Boolean completed) {
-        ApiResponse<List<TaskResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(taskService.getTasks(completed));
-        return apiResponse;
+        return ApiResponse.<List<TaskResponse>>builder()
+                .result(taskService.getTasks(completed))
+                .build();
     }
 
     @GetMapping("/{id}")
     public ApiResponse<TaskResponse> getTaskById(@PathVariable Long id) {
-        ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(taskService.getTaskById(id));
-        return apiResponse;
+        return ApiResponse.<TaskResponse>builder()
+                .result(taskService.getTaskById(id))
+                .build();
     }
 
     @GetMapping("/search")
     public ApiResponse<List<TaskResponse>> searchTasks(@RequestParam String keyword) {
-        ApiResponse<List<TaskResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(taskService.searchTasks(keyword));
-        return apiResponse;
+        return ApiResponse.<List<TaskResponse>>builder()
+                .result(taskService.searchTasks(keyword))
+                .build();
     }
 
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<TaskResponse> createTask(@RequestBody @Valid TaskRequest request) {
-        ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(taskService.createTask(request));
-        return apiResponse;
+        return ApiResponse.<TaskResponse>builder()
+                .result(taskService.createTask(request))
+                .build();
+    }
+
+    @PatchMapping("/{id})")
+    public ApiResponse<TaskResponse> patchTask(@PathVariable Long id, @RequestBody @Valid TaskPatchRequest request) {
+        return ApiResponse.<TaskResponse>builder()
+                .result(taskService.patchTask(id, request))
+                .build();
     }
 
     @PutMapping("/{id}")
     public ApiResponse<TaskResponse> updateTask(@PathVariable Long id, @RequestBody @Valid TaskRequest request) {
-        ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(taskService.updateTask(id, request));
-        return apiResponse;
+        return ApiResponse.<TaskResponse>builder()
+                .result(taskService.updateTask(id, request))
+                .build();
     }
 
     @PatchMapping("/{id}/complete")
     public ApiResponse<TaskResponse> markTaskAsCompleted(@PathVariable Long id) {
-        ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(taskService.markTaskAsCompleted(id));
-        return apiResponse;
+        return ApiResponse.<TaskResponse>builder()
+                .result(taskService.markTaskAsCompleted(id))
+                .build();
     }
 
     @PatchMapping("/{id}/uncomplete")
     public ApiResponse<TaskResponse> markTaskAsUncompleted(@PathVariable Long id) {
-        ApiResponse<TaskResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(taskService.markTaskAsUncompleted(id));
-        return apiResponse;
+        return ApiResponse.<TaskResponse>builder()
+                .result(taskService.markTaskAsUncompleted(id))
+                .build();
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ApiResponse<String> deleteTask(@PathVariable Long id) {
-        ApiResponse<String> apiResponse = new ApiResponse<>();
         taskService.deleteTask(id);
-        apiResponse.setResult("Task with ID " + id + " deleted successfully");
-        return apiResponse;
+
+        return ApiResponse.<String>builder()
+                .message("Task deleted successfully")
+                .result("Deleted task id: " + id)
+                .build();
     }
 }
